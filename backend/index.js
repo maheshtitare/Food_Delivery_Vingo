@@ -36,6 +36,10 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(cookieParser())
+app.get("/", (req, res) => {
+  res.send("Vingo Backend is running 🚀");
+});
+
 app.use("/api/auth",authRouter)
 app.use("/api/user",userRouter)
 app.use("/api/shop",shopRouter)

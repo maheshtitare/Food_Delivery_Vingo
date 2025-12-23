@@ -1,14 +1,17 @@
-import mongoose from "mongoose"
+// Question: MongoDB connection using mongoose and dotenv env variable
 
-const connectDb=async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URL)
-        console.log("db connected")
-    } catch (error) {
-        // console.log("db error")
-        console.error("db error:", error.message);
+import mongoose from "mongoose";
 
-    }
-}
+const connectDb = async () => {
+  try {
+    // MongoDB connection using .env variable
+    await mongoose.connect(process.env.MONGO_URI);
 
-export default connectDb
+    console.log("db connected");
+  } catch (error) {
+    console.error("db error:", error.message);
+    process.exit(1); // app band ho jaye agar db connect na ho
+  }
+};
+
+export default connectDb;

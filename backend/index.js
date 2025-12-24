@@ -18,17 +18,16 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-/* ✅ FRONTEND origins only */
+/* ✅ CORRECT FRONTEND ORIGINS (FIXED) */
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://food-delivery-vingo-woad.vercel.app"
+  "https://food-delivery-vingo-ohlu.vercel.app"
 ];
 
-/* ✅ Express CORS */
+/* ✅ EXPRESS CORS */
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests like Postman / server-to-server
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -43,7 +42,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-/* ✅ Socket.IO CORS */
+/* ✅ SOCKET.IO CORS */
 const io = new Server(server, {
   cors: {
     origin: allowedOrigins,
@@ -54,22 +53,22 @@ const io = new Server(server, {
 
 app.set("io", io);
 
-/* ✅ Health check */
+/* ✅ HEALTH CHECK */
 app.get("/", (req, res) => {
   res.send("Vingo Backend is running 🚀");
 });
 
-/* ✅ API routes */
+/* ✅ API ROUTES */
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/shop", shopRouter);
 app.use("/api/item", itemRouter);
 app.use("/api/order", orderRouter);
 
-/* ✅ Socket handler */
+/* ✅ SOCKET HANDLER */
 socketHandler(io);
 
-/* ✅ Start server */
+/* ✅ START SERVER */
 const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, async () => {
